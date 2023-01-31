@@ -8,7 +8,7 @@ const formReducer = (state, event) => {
     }
   }
 
-const Modal = () => {
+const Modal = ({userInfo, setUserInfo}) => {
 
     const [formData, setFormData] = useReducer(formReducer, {})
     const handleSubmit = (e) => {
@@ -18,8 +18,6 @@ const Modal = () => {
 
     return (
         <div>
-{/* The button to open modal */}
-
 {/* Put this part before </body> tag */}
 <input type="checkbox" id="modal" className="modal-toggle" />
 <div className="modal">
@@ -33,26 +31,28 @@ const Modal = () => {
             name="name"
             type="text"
             onChange={setFormData}
-            placeholder=" Name"
+            placeholder={`${userInfo?.name}`}
           />
           <input
             className="w-full focus:outline-none py-1 px-3 rounded-md my-2"
             name="email"
             type="email"
-            onChange={setFormData}
-            placeholder="Email"
+            onChange={setFormData} 
+            readOnly
+            defaultValue={`${userInfo?.email}`}
           />
           <input
             className="w-full focus:outline-none py-1 px-3 rounded-md my-2"
             name="salary"
             type="number"
             onChange={setFormData}
-            placeholder="Sellary"
+            defaultValue={`${userInfo?.salary}`}
           />
           <input
             className="w-full focus:outline-none py-1 px-3 rounded-md my-2"
             name="join"
             type="date"
+            defaultValue={`${userInfo?.join}`}
             onChange={setFormData}
           />
          <div className="flex gap-10 py-2">

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteEmployee } from '../employeeSlice';
 import { AiFillEdit, AiFillDelete } from 'react-icons/ai'
@@ -7,6 +7,8 @@ import Modal from './Modal';
 
 const Table = () => {
 
+  const [userInfo, setUserInfo] = useState(null)
+
     const dispatch = useDispatch()
 
     const handleDelete = (id) => {
@@ -14,6 +16,7 @@ const Table = () => {
     }
   
     const employees = useSelector((state) => state.employeeReducer.employee)
+    console.log(employees);
   
 
     return (
@@ -46,7 +49,7 @@ const Table = () => {
                     <td>{status}</td>
 
                     <td className='text-green-600'>
-                        <label htmlFor="modal" className=""><AiFillEdit /></label>
+                        <label onClick={() => setUserInfo(employee)} htmlFor="modal" className=""><AiFillEdit /></label>
                     </td>
 
                     <td>
@@ -64,7 +67,9 @@ const Table = () => {
         </table>
       </div>
     </div>
-    <Modal/>
+    {
+      userInfo && <Modal userInfo={userInfo} setUserInfo={setUserInfo}/>
+    }
         </div>
     );
 };
