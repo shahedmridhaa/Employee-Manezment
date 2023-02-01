@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteEmployee } from '../employeeSlice';
+import { deleteEmployee, employee } from '../employeeSlice';
 import { AiFillEdit, AiFillDelete } from 'react-icons/ai'
 import Modal from './Modal';
+import { useEmployeeQueryQuery } from './fetchApi';
 
 
 const Table = () => {
+
+
 
   const [userInfo, setUserInfo] = useState(null)
 
@@ -15,9 +18,16 @@ const Table = () => {
       dispatch(deleteEmployee(id))
     }
   
-    const employees = useSelector((state) => state.employeeReducer.employee)
-    console.log(employees);
-  
+    // const employees = useSelector((state) => state.employeeReducer)
+
+    //  useEffect(()=>{
+    //      dispatch(employee())
+    //  },[dispatch])
+
+    //  console.log(employees.data);
+
+    const {data} = useEmployeeQueryQuery()
+    console.log(data);
 
     return (
         <div>
@@ -36,8 +46,8 @@ const Table = () => {
             </tr>
           </thead>
           <tbody>
-            {employees &&
-              employees.map((employee) => {
+            {
+              data?.map((employee) => {
                 const { id, name, email, salary, join, status } = employee
 
                 return (
